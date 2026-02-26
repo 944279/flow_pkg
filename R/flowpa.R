@@ -11,8 +11,8 @@
 #' @importFrom whitebox wbt_fill_depressions
 
 fill_sinks <- function(dem) {
-  obj_in <- tempfile(fileext = ".tif")
-  obj_out <- tempfile(fileext = ".tif")
+  obj_in <- "input.tif"
+  obj_out <- "output.tif"
 
   writeRaster(dem, obj_in, overwrite = TRUE)
   wbt_fill_depressions(dem = obj_in, output = obj_out)
