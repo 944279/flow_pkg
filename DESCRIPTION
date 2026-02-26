@@ -1,11 +1,14 @@
-Package: dg66761
-Title: What the Package Does (One Line, Title Case)
+Package: flowpa
+Title: Extract Stream Networks from Digital Elevation Models
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Arantxa", "Rodriguez", , "944279@unizar.es", role = c("aut", "cre"))
+Description: Extrae cauces de agua en formato vectorial directamente desde un modelo de elevación (DEM).
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
+Imports:
+    whitebox,
+    sf,
+    terra
