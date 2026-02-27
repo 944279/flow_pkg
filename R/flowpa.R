@@ -6,18 +6,16 @@
 #' @param dem un objeto SpatRaster (elevacion)
 #' @return un objeto SpatRaster con los sumideros rellenados
 #' @export
-#' @importFrom terra rast
-#' @importFrom terra writeRaster
-#' @importFrom whitebox wbt_fill_depressions
+#' @importFrom terra focal
+#' @importFrom terra ifel
 
 fill_sinks <- function(dem) {
-  obj_in <- "input.tif"
-  obj_out <- "output.tif"
+  # Nota: usamos w = 3 porque es el estandar para conectividad de 8 vecinos, usa el que requiera
+  min_vecinos <- focal(dem, w = 3, fun = "min", na.rm = TRUE)
 
-  writeRaster(dem, obj_in, overwrite = TRUE)
-  wbt_fill_depressions(dem = obj_in, output = obj_out)
+  dem_fill <- ifel(dem < min_vecinos, min_vecinos, dem)
 
-  return(rast(obj_out))
+  return(dem_fill)
 }
 
 #' 2. Direccion de flujo
@@ -30,7 +28,9 @@ fill_sinks <- function(dem) {
 #' @importFrom terra terrain
 
 flow_direct <- function(dem_fill) {
-  terrain(dem_fill, v = "flowdir")
+  dir_flow <- terrain(dem_fill, v = "flowdir")
+
+  return(dir_flow)
 }
 
 #' 3. Acumulacion de flujo
@@ -43,7 +43,9 @@ flow_direct <- function(dem_fill) {
 #' @importFrom terra flowAccumulation
 
 flow_accumul <- function(dir_flow) {
-  flowAccumulation(dir_flow)
+  acu_flow <- flowAccumulation(dir_flow)
+
+  return(acu_flow)
 }
 
 #' 4. Definir el umbral
@@ -57,7 +59,9 @@ flow_accumul <- function(dir_flow) {
 #' @importFrom terra ifel
 
 threshold <- function(acu_flow, umbral = 5000) {
-  ifel(acu_flow > umbral, 1, NA)
+  raster_rios <- ifel(acu_flow > umbral, 1, NA)
+
+  return(raster_rios)
 }
 
 #' 5. Vectorizacion
