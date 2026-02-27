@@ -17,3 +17,8 @@ un objeto sf de tipo multilinestring
 \description{
 \code{rios_vect} convierte los pixeles filtrados en polilineas vectoriales
 }
+\examples{
+\dontrun{
+rios_dem <- rios_vect(raster_rios)
+}
+}

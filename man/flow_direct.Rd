@@ -17,3 +17,8 @@ un objeto SpatRaster con códigos de direccion
 \description{
 \code{flow_direct} calcula hacia cual de los 8 píxeles vecinos fluira el agua por gravedad
 }
+\examples{
+\dontrun{
+dir_flow <- flow_direct(dem_fill)
+}
+}

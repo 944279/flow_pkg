@@ -19,3 +19,8 @@ Un objeto SpatRaster binario (1 es rio, NA es no rio)
 \description{
 \code{threshold} filtra el raster para quedarse solo con los pixeles que superen un valor
 }
+\examples{
+\dontrun{
+raster_rios <- threshold(acu_flow, umbral = 500)
+}
+}

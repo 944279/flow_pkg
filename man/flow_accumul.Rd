@@ -17,3 +17,8 @@ un objeto SpatRaster con el conteo de celdas acumuladas
 \description{
 \code{flow_accumul} calcula cuantas celdas vierten agua en cada celda individual.
 }
+\examples{
+\dontrun{
+acu_flow <- flow_accumul(dir_flow)
+}
+}

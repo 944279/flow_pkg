@@ -1,4 +1,4 @@
-#' 1. Rellenar sumideros
+#' 1. Rellenar huecos
 #'
 #' \code{fill_sinks} procesa un Modelo Digital de Elevaciones (DEM)
 #' para eliminar imperfecciones y hoyos, evitando que el agua se estanque
@@ -8,6 +8,11 @@
 #' @export
 #' @importFrom terra focal
 #' @importFrom terra ifel
+#' @examples
+#' \dontrun{
+#' dem <- rast("C:/Users/AlumnoMaster/dem.tif")
+#' dem_fill <- fill_sinks(dem)
+#' }
 
 fill_sinks <- function(dem) {
   # Nota: usamos w = 3 porque es el estandar para conectividad de 8 vecinos, usa el que requiera
@@ -26,6 +31,10 @@ fill_sinks <- function(dem) {
 #' @return un objeto SpatRaster con códigos de direccion
 #' @export
 #' @importFrom terra terrain
+#' @examples
+#' \dontrun{
+#' dir_flow <- flow_direct(dem_fill)
+#' }
 
 flow_direct <- function(dem_fill) {
   dir_flow <- terrain(dem_fill, v = "flowdir")
@@ -41,6 +50,10 @@ flow_direct <- function(dem_fill) {
 #' @return un objeto SpatRaster con el conteo de celdas acumuladas
 #' @export
 #' @importFrom terra flowAccumulation
+#' @examples
+#' \dontrun{
+#' acu_flow <- flow_accumul(dir_flow)
+#' }
 
 flow_accumul <- function(dir_flow) {
   acu_flow <- flowAccumulation(dir_flow)
@@ -57,6 +70,10 @@ flow_accumul <- function(dir_flow) {
 #' @return Un objeto SpatRaster binario (1 es rio, NA es no rio)
 #' @export
 #' @importFrom terra ifel
+#' @examples
+#' \dontrun{
+#' raster_rios <- threshold(acu_flow, umbral = 500)
+#' }
 
 threshold <- function(acu_flow, umbral = 5000) {
   raster_rios <- ifel(acu_flow > umbral, 1, NA)
@@ -74,6 +91,10 @@ threshold <- function(acu_flow, umbral = 5000) {
 #' @importFrom terra as.polygons
 #' @importFrom sf st_as_sf
 #' @importFrom sf st_cast
+#' @examples
+#' \dontrun{
+#' rios_dem <- rios_vect(raster_rios)
+#' }
 
 rios_vect <- function(raster_rios) {
   rios_poly <- as.polygons(raster_rios)

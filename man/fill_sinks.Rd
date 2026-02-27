@@ -3,7 +3,7 @@
 \name{fill_sinks}
 \alias{fill_sinks}
 \title{\enumerate{
-\item Rellenar sumideros
+\item Rellenar huecos
 }}
 \usage{
 fill_sinks(dem)
@@ -17,4 +17,10 @@ un objeto SpatRaster con los sumideros rellenados
 \description{
 \code{fill_sinks} procesa un Modelo Digital de Elevaciones (DEM)
 para eliminar imperfecciones y hoyos, evitando que el agua se estanque
+}
+\examples{
+\dontrun{
+dem <- rast("C:/Users/AlumnoMaster/dem.tif")
+dem_fill <- fill_sinks(dem)
+}
 }
